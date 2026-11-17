@@ -1,0 +1,37 @@
+[project]
+name = "pykeel"
+version = "0.1.0"
+description = "A from-scratch coding agent harness"
+readme = "README.md"
+authors = [
+    { name = "woohyun", email = "shinedngus225@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+pykeel = "pykeel:main"
+
+[build-system]
+requires = ["uv_build>=0.13.9,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.40.2",
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[tool.basedpyright]
+# basedpyright의 기본 모드는 recommended이고, pyright strict보다 엄격하다.
+# 그보다 한 단계 덜 엄격한 strict를 명시한다.
+# 에디터도 basedpyright 확장을 써야 CLI와 경고가 일치한다.
+typeCheckingMode = "strict"
+pythonVersion = "3.14"
+
+[tool.ruff]
+target-version = "py314"
+
+[tool.ruff.lint]
+extend-select = ["I", "UP", "B"]

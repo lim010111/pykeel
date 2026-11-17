@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+
+# 도구 캐시
+.ruff_cache/
+.pytest_cache/
+
+# 비밀값
+.env
+.env.*
+
+# 실행 기록(trace 원본). 테스트 픽스처는 비밀값을 지운 뒤 tests/ 아래에 따로 커밋한다.
+runs/
