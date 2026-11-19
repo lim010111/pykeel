@@ -13,3 +13,10 @@
 - [ ] Responses 응답에 백엔드 식별 필드가 있는지 확인하고, 결과를 plan.md에 반영한다
 - [ ] 비밀값과 계정 식별 헤더를 지운 원본이 픽스처로 커밋되고, 비밀값 검사를 통과한다
 - [ ] llm 설계 메모에 이번 사이클의 실제 데이터 절을 쓴다
+
+## Comments
+
+- 2026-11-19: 키를 처음 넣을 때 챙길 것(01 비밀값 검사 쪽 사정).
+  - `.env.example`을 `.env`로 복사해 채운다. 환경 변수 이름은 `_API_KEY`, `_TOKEN`, `_SECRET`, `_PASSWORD` 중 하나로 끝나야 검사기가 실제 값을 찾는다(`scripts/secret_scan.py`의 `SECRET_ENV_NAME`). 이름을 바꿀 때도 이 규칙을 지킨다.
+  - pytest는 `.env`를 알아서 읽지 않는다. 실제 값까지 검사하려면 `uv run --env-file .env pytest`로 돌린다. pre-commit hook은 `.env`가 있으면 읽는다.
+  - `.env`를 만든 직후 `uv run --env-file .env pytest tests/policy`가 통과하는지 한 번 본다. 픽스처를 커밋하기 전에도 같은 명령을 돌린다.
