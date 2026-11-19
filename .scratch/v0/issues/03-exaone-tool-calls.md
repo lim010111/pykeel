@@ -12,3 +12,7 @@
 - [ ] 응답에 백엔드 식별 필드(`metadata.weight_version`)가 있는지 확인한다
 - [ ] 비밀값을 지운 원본이 픽스처로 커밋되고, 비밀값 검사를 통과한다
 - [ ] 결과를 llm 설계 메모의 실제 데이터 절과 plan.md에 남긴다. tool_calls가 오지 않으면 EXAONE 전제를 다시 연다
+
+## Comments
+
+- 2026-11-19: EXAONE 키는 형식을 몰라서 키 모양 규칙에 걸리지 않는다. `Authorization: Bearer` 헤더째 남으면 bearer-token 규칙에 걸리지만, 키만 따로 남으면 실제 값 검사로만 잡힌다. 그러니 변수 이름을 `.env.example`대로 `EXAONE_API_KEY`로 둔다. 나머지 주의점은 [02](02-responses-real-data.md)의 Comments에 있다.
