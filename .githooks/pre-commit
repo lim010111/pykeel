@@ -1,0 +1,12 @@
+#!/bin/sh
+# 커밋 전에 index에 올라간 내용에서 비밀값을 찾는다(docs/plan.md "원칙 > 비밀값").
+# 연결: git config core.hooksPath .githooks
+#
+# .env가 있으면 그 값을 환경 변수로 넣어, 실제 키 값이 커밋되는지도 본다.
+# 검사기는 값을 출력하지 않는다.
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+if [ -f .env ]; then
+    exec uv run --frozen --env-file .env python -I scripts/secret_scan.py --staged
+fi
+exec uv run --frozen python -I scripts/secret_scan.py --staged
