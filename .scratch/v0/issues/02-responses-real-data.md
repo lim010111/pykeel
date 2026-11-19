@@ -7,12 +7,12 @@
 **Status:** ready-for-human
 
 - [ ] pykeel 전용 OpenAI 프로젝트에 월 hard spend limit이 걸려 있고, 그 프로젝트의 키만 쓴다
-- [ ] bash function tool을 붙인 요청과 응답의 원본이 왕복 한 번 전체로 남아 있다(function_call, function_call_output, 최종 답)
-- [ ] `store: false`일 때 오는 reasoning item(암호화된 추론 내용 포함)을 다음 요청에 그대로 돌려준 기록이 있다
+- [x] bash function tool을 붙인 요청과 응답의 원본이 왕복 한 번 전체로 남아 있다(function_call, function_call_output, 최종 답)
+- [x] `store: false`일 때 오는 reasoning item(암호화된 추론 내용 포함)을 다음 요청에 그대로 돌려준 기록이 있다
 - [ ] 실제 응답 헤더를 보고 trace 허용 목록(요청 ID, 처리 시간, 속도 제한)에 넣을 헤더 이름을 정한다
-- [ ] Responses 응답에 백엔드 식별 필드가 있는지 확인하고, 결과를 plan.md에 반영한다
-- [ ] 비밀값과 계정 식별 헤더를 지운 원본이 픽스처로 커밋되고, 비밀값 검사를 통과한다
-- [ ] llm 설계 메모에 이번 사이클의 실제 데이터 절을 쓴다
+- [x] Responses 응답에 백엔드 식별 필드가 있는지 확인하고, 결과를 plan.md에 반영한다
+- [x] 비밀값과 계정 식별 헤더를 지운 원본이 픽스처로 커밋되고, 비밀값 검사를 통과한다
+- [x] llm 설계 메모에 이번 사이클의 실제 데이터 절을 쓴다
 
 ## Comments
 
@@ -20,3 +20,7 @@
   - `.env.example`을 `.env`로 복사해 채운다. 환경 변수 이름은 `_API_KEY`, `_TOKEN`, `_SECRET`, `_PASSWORD` 중 하나로 끝나야 검사기가 실제 값을 찾는다(`scripts/secret_scan.py`의 `SECRET_ENV_NAME`). 이름을 바꿀 때도 이 규칙을 지킨다.
   - pytest는 `.env`를 알아서 읽지 않는다. 실제 값까지 검사하려면 `uv run --env-file .env pytest`로 돌린다. pre-commit hook은 `.env`가 있으면 읽는다.
   - `.env`를 만든 직후 `uv run --env-file .env pytest tests/policy`가 통과하는지 한 번 본다. 픽스처를 커밋하기 전에도 같은 명령을 돌린다.
+- 2026-11-19: 진행 상황.
+  - 왕복 두 벌을 `tests/fixtures/responses/`에 픽스처로 넣었다. `bash-no-reasoning`(low)과 `bash-with-reasoning`(high)이다. 응답 헤더에서 `openai-organization`, `openai-project`, `set-cookie`, `cf-ray`의 값을 지웠고, `uv run --env-file .env pytest tests/policy`가 통과했다.
+  - low와 medium에서는 reasoning item이 오지 않아 high로 받았다. 관찰 내용은 `docs/design/llm.md` "실제 데이터"에 있다.
+  - 남은 것: spend limit 확인(사용자가 콘솔에서), trace 헤더 허용 목록 결정(후보는 설계 메모의 헤더 표).

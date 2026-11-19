@@ -52,7 +52,7 @@ E1, C0, E0의 순서는 바꿔도 됩니다. 단, C0 전에는 EXAONE을 측정�
 
 - tool은 function tool `bash` 하나입니다. 파일을 읽고 고치는 일도 셸 명령으로 합니다. 루프를 끝까지 돌리기 위한 최소 세트이고, 실험의 출발 인터페이스는 InterfaceSpec을 분리할 때 따로 정합니다(미룬 결정).
 - 모듈 사이클 1단계(실제 데이터 보기)에서 EXAONE에도 tools를 붙인 요청을 curl로 보내 원본을 저장합니다. tool_calls가 실제로 오는지, `reasoning_content`를 어떻게 돌려줘야 하는지 확인합니다. tool_calls가 오지 않으면 EXAONE 전제를 E0까지 기다리지 않고 바로 다시 엽니다.
-- 같은 단계에서 Responses 응답에 백엔드 식별 필드가 있는지 확인합니다. 조사에서 확인한 `system_fingerprint`는 Chat Completions 응답 필드입니다([조사](research/2026-11-18-openai.md)).
+- 같은 단계에서 Responses 응답에 백엔드 식별 필드가 있는지 확인합니다. 조사에서 확인한 `system_fingerprint`는 Chat Completions 응답 필드입니다([조사](research/2026-11-18-openai.md)). 확인 결과 Responses 응답에는 없었습니다([llm 설계 메모](design/llm.md)).
 
 **완료 기준:**
 
@@ -162,7 +162,7 @@ E1, C0, E0의 순서는 바꿔도 됩니다. 단, C0 전에는 EXAONE을 측정�
 - held-out 목록은 첫 파일럿 전에 확정해서 따로 떼어 둡니다. 구체적인 분리 방식은 열린 질문입니다.
 - 파일럿에 쓴 과제는 held-out에 넣지 않습니다.
 - 한 비교 안의 실행은 모두 같은 하네스 커밋(태그)과 같은 모델 스냅샷으로 돌립니다. 실험은 태그에서 돌리고, 하네스 개발은 main에서 계속합니다. 둘 중 하나라도 바뀌면 기준선부터 다시 측정합니다.
-- 날짜로 고정된 스냅샷이 없는 모델이 늘고 있습니다(GPT-5.6 이후, EXAONE). 이런 모델은 실행할 때마다 응답의 실제 모델 ID를 기록하고, ID가 바뀌면 기준선부터 다시 측정합니다. 다만 ID가 같아도 가중치가 바뀔 수 있습니다. 그래서 응답 본문의 백엔드 식별 필드(예: Chat Completions의 `system_fingerprint`, EXAONE의 `metadata.weight_version`)도 원본째 남깁니다. Responses 응답에 같은 역할의 필드가 있는지는 v0에서 확인합니다. 이 필드를 재측정 기준에 넣을지는 B 직전에 정합니다.
+- 날짜로 고정된 스냅샷이 없는 모델이 늘고 있습니다(GPT-5.6 이후, EXAONE). 이런 모델은 실행할 때마다 응답의 실제 모델 ID를 기록하고, ID가 바뀌면 기준선부터 다시 측정합니다. 다만 ID가 같아도 가중치가 바뀔 수 있습니다. 그래서 응답 본문의 백엔드 식별 필드(예: Chat Completions의 `system_fingerprint`, EXAONE의 `metadata.weight_version`)도 원본째 남깁니다. Responses 응답에는 같은 역할의 필드가 없고, `model`도 요청한 별칭 그대로 돌아옵니다(2026-11-19, `gpt-6.2-sol`, [llm 설계 메모](design/llm.md)). 그래서 Responses 모델은 가중치가 바뀌어도 응답만으로는 알 수 없습니다. 이 필드를 재측정 기준에 넣을지는 B 직전에 정합니다.
 
 ## 연구 주제
 
