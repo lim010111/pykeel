@@ -6,7 +6,7 @@
 
 **Status:** ready-for-human
 
-- [ ] pykeel 전용 OpenAI 프로젝트에 월 hard spend limit이 걸려 있고, 그 프로젝트의 키만 쓴다
+- [x] pykeel 전용 OpenAI 프로젝트에 월 hard spend limit이 걸려 있고, 그 프로젝트의 키만 쓴다
 - [x] bash function tool을 붙인 요청과 응답의 원본이 왕복 한 번 전체로 남아 있다(function_call, function_call_output, 최종 답)
 - [x] `store: false`일 때 오는 reasoning item(암호화된 추론 내용 포함)을 다음 요청에 그대로 돌려준 기록이 있다
 - [x] 실제 응답 헤더를 보고 trace 허용 목록(요청 ID, 처리 시간, 속도 제한)에 넣을 헤더 이름을 정한다
@@ -28,4 +28,4 @@
   - `openai-processing-ms`를 잘못 짝지었던 서술을 바로잡았다. 처리 시간은 출력 토큰 수와 함께 커졌다.
   - 최상위 종료 상태(`status`, `error`, `incomplete_details`), 토큰 산술, 미확인 목록을 보충했다.
   - trace 헤더 허용 목록을 정했다: `x-request-id`, `openai-processing-ms`, `openai-version`, `retry-after`, `x-ratelimit-*` 9종(project-tokens 3종 포함), `server-timing-total`, `x-openai-inference-capacity-reason`. 근거는 설계 메모의 헤더 표에 있다.
-  - 남은 것: spend limit 확인(사용자가 콘솔에서).
+- 2026-11-19: 사용자가 전용 프로젝트에 월 hard spend limit이 걸려 있는 것을 콘솔에서 확인했다. 모든 항목을 마쳤다.
