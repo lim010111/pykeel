@@ -1,0 +1,29 @@
+{
+  "model": "gpt-6.2-sol",
+  "store": false,
+  "reasoning": { "effort": "low" },
+  "tools": [
+    {
+      "type": "function",
+      "name": "bash",
+      "description": "Run a bash command and return its output.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "The bash command to run."
+          }
+        },
+        "required": ["command"],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "input": [
+    {
+      "role": "user",
+      "content": "bash tool로 `echo hello`를 실행하고 결과를 알려줘."
+    }
+  ]
+}
